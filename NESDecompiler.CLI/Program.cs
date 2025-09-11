@@ -165,7 +165,7 @@ namespace NESDecompiler.CLI
             writer.WriteLine(" */");
             writer.WriteLine();
 
-            string guardName = Path.GetFileNameWithoutExtension(decompiler.ROMInfo.RawData[0].ToString()).ToUpper() + "_H";
+            string guardName = Path.GetFileNameWithoutExtension(decompiler.ROMInfo.RawData![0].ToString()).ToUpper() + "_H";
             writer.WriteLine($"#ifndef {guardName}");
             writer.WriteLine($"#define {guardName}");
             writer.WriteLine();

@@ -1026,7 +1026,7 @@ namespace NESDecompiler.Core.Decompilation
         {
             // Process LDA, LDX, LDY
             string register = instruction.Info.Mnemonic.Substring(2);
-            string variableName = GetVariableName(instruction);
+            string? variableName = GetVariableName(instruction);
 
             if (variableName != null)
             {
@@ -1046,7 +1046,7 @@ namespace NESDecompiler.Core.Decompilation
         {
             // Process STA, STX, STY
             string register = instruction.Info.Mnemonic.Substring(2);
-            string variableName = GetVariableName(instruction);
+            string? variableName = GetVariableName(instruction);
 
             if (variableName != null)
             {
@@ -1314,7 +1314,7 @@ namespace NESDecompiler.Core.Decompilation
         private void GenerateArithmeticCode(DisassembledInstruction instruction, StringBuilder sb)
         {
             // Handle arithmetic operations: ADC, SBC
-            string operand = GetOperandString(instruction);
+            string? operand = GetOperandString(instruction);
             if (operand == null)
                 return;
 
@@ -1359,7 +1359,7 @@ namespace NESDecompiler.Core.Decompilation
         private void GenerateIncrementCode(DisassembledInstruction instruction, StringBuilder sb)
         {
             // Handle increment operations: INC, INX, INY
-            string operand = GetOperandString(instruction);
+            string? operand = GetOperandString(instruction);
 
             switch (instruction.Info.Mnemonic)
             {
@@ -1393,7 +1393,7 @@ namespace NESDecompiler.Core.Decompilation
         private void GenerateDecrementCode(DisassembledInstruction instruction, StringBuilder sb)
         {
             // Handle decrement operations: DEC, DEX, DEY
-            string operand = GetOperandString(instruction);
+            string? operand = GetOperandString(instruction);
 
             switch (instruction.Info.Mnemonic)
             {
@@ -1427,7 +1427,7 @@ namespace NESDecompiler.Core.Decompilation
         private void GenerateShiftCode(DisassembledInstruction instruction, StringBuilder sb)
         {
             // Handle shift operations: ASL, LSR, ROL, ROR
-            string operand;
+            string? operand;
 
             if (instruction.Info.AddressingMode == AddressingMode.Accumulator)
             {
@@ -1489,7 +1489,7 @@ namespace NESDecompiler.Core.Decompilation
         private void GenerateLogicCode(DisassembledInstruction instruction, StringBuilder sb)
         {
             // Handle logic operations: AND, ORA, EOR, BIT
-            string operand = GetOperandString(instruction);
+            string? operand = GetOperandString(instruction);
             if (operand == null)
                 return;
 
@@ -1533,7 +1533,7 @@ namespace NESDecompiler.Core.Decompilation
         private void GenerateCompareCode(DisassembledInstruction instruction, StringBuilder sb)
         {
             // Handle compare operations: CMP, CPX, CPY
-            string operand = GetOperandString(instruction);
+            string? operand = GetOperandString(instruction);
             if (operand == null)
                 return;
 
@@ -1710,7 +1710,7 @@ namespace NESDecompiler.Core.Decompilation
             }
         }
 
-        private string GetOperandString(DisassembledInstruction instruction)
+        private string? GetOperandString(DisassembledInstruction instruction)
         {
             if (instruction.Info.AddressingMode == AddressingMode.Immediate)
             {

@@ -76,7 +76,7 @@ namespace NESDecompiler.Core.ROM
         /// <summary>
         /// The raw ROM data for reference
         /// </summary>
-        public byte[] RawData { get; set; }
+        public byte[]? RawData { get; set; }
 
         /// <summary>
         /// List of identified entry points (including reset vector and NMI)

@@ -25,17 +25,17 @@ namespace NESDecompiler.Core.Disassembly
         /// <summary>
         /// Information about this instruction's opcode
         /// </summary>
-        public InstructionInfo Info { get; set; }
+        public required InstructionInfo Info { get; init; }
 
         /// <summary>
         /// The raw bytes of this instruction (including operands)
         /// </summary>
-        public byte[] Bytes { get; set; }
+        public byte[]? Bytes { get; set; }
 
         /// <summary>
         /// The operand bytes of this instruction
         /// </summary>
-        public byte[] Operands => Bytes.Length > 1 ? Bytes[1..] : Array.Empty<byte>();
+        public byte[] Operands => Bytes!.Length > 1 ? Bytes[1..] : Array.Empty<byte>();
 
         /// <summary>
         /// The target address for branch and jump instructions
@@ -85,7 +85,7 @@ namespace NESDecompiler.Core.Disassembly
             }
 
             sb.Append($"{CPUAddress:X4}  ");
-            foreach (var b in Bytes)
+            foreach (var b in Bytes!)
             {
                 sb.Append($"{b:X2} ");
             }
@@ -398,7 +398,7 @@ namespace NESDecompiler.Core.Disassembly
                     if (instruction.TargetAddress.HasValue)
                     {
                         ushort target = instruction.TargetAddress.Value;
-                        if (labels.TryGetValue(target, out string label))
+                        if (labels.TryGetValue(target, out string? label))
                         {
                             instruction.Comment = $"-> {label}";
                         }
