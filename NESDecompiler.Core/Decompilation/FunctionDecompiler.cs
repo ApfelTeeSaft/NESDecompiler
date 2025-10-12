@@ -56,6 +56,13 @@ public static class FunctionDecompiler
             }
 
             var instruction = GetNextInstruction(nextAddress, codeRegions);
+            if (instruction == null)
+            {
+                // Consider no instruction the end of the function. This is usually the case
+                // with an always taken branch
+                continue;
+            }
+
             instructions.Add(instruction);
 
             // Ensure the function entrypoint has a label
@@ -94,7 +101,7 @@ public static class FunctionDecompiler
         return new DecompiledFunction(functionAddress, instructions, jumpAddresses);
     }
 
-    private static DisassembledInstruction GetNextInstruction(ushort address, IReadOnlyList<CodeRegion> regions)
+    private static DisassembledInstruction? GetNextInstruction(ushort address, IReadOnlyList<CodeRegion> regions)
     {
         var relevantRegion = regions
             .Where(x => x.BaseAddress < address)
@@ -112,8 +119,9 @@ public static class FunctionDecompiler
         var info = InstructionSet.GetInstruction(bytes[0]);
         if (!info.IsValid)
         {
-            var message = $"Opcode 0x{bytes[0]:X2} at address 0x{address:X4} is not a known instruction";
-            throw new InvalidOperationException(message);
+            var message = $"Warning: encountered unknown op code 0x{bytes[0]:X2} at address 0x{address:X4}";
+            Console.WriteLine(message);
+            return null;
         }
 
         if (bytes.Length < info.Size)
