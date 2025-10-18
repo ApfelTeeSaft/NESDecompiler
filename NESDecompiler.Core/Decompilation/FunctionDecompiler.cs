@@ -104,7 +104,7 @@ public static class FunctionDecompiler
     private static DisassembledInstruction? GetNextInstruction(ushort address, IReadOnlyList<CodeRegion> regions)
     {
         var relevantRegion = regions
-            .Where(x => x.BaseAddress < address)
+            .Where(x => x.BaseAddress <= address)
             .Where(x => x.BaseAddress + x.Bytes.Length > address)
             .FirstOrDefault();
 
